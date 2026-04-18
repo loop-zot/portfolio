@@ -438,29 +438,20 @@ function renderPortfolio(config) {
     });
   });
 
-  // ── Read More Toggle ────────────
-  portfolio.querySelectorAll('.read-more-toggle').forEach(toggle => {
-    const handleToggle = () => {
-      const desc = toggle.closest('.video-description');
-      const fullText = desc.dataset.fullText;
-      const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+  // ── Read More Toggle (event delegation) ────────────
+  portfolio.addEventListener('click', (e) => {
+    const toggle = e.target.closest('.read-more-toggle');
+    if (!toggle) return;
 
-      if (isExpanded) {
-        desc.innerHTML = fullText.substring(0, 150) + '... <span class="read-more-toggle" role="button" tabindex="0" aria-expanded="false">Read More</span>';
-        // Re-bind the new toggle
-        const newToggle = desc.querySelector('.read-more-toggle');
-        newToggle.addEventListener('click', handleToggle);
-        newToggle.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleToggle(); } });
-      } else {
-        desc.innerHTML = fullText + ' <span class="read-more-toggle" role="button" tabindex="0" aria-expanded="true">Show Less</span>';
-        // Re-bind the new toggle
-        const newToggle = desc.querySelector('.read-more-toggle');
-        newToggle.addEventListener('click', handleToggle);
-        newToggle.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleToggle(); } });
-      }
-    };
-    toggle.addEventListener('click', handleToggle);
-    toggle.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleToggle(); } });
+    const desc = toggle.closest('.video-description');
+    const fullText = desc.dataset.fullText;
+    const isExpanded = toggle.getAttribute('aria-expanded') === 'true';
+
+    if (isExpanded) {
+      desc.innerHTML = fullText.substring(0, 150) + '... <span class="read-more-toggle" role="button" tabindex="0" aria-expanded="false">Read More</span>';
+    } else {
+      desc.innerHTML = fullText + ' <span class="read-more-toggle" role="button" tabindex="0" aria-expanded="true">Show Less</span>';
+    }
   });
 
   // ── Lazy Load Videos ─────────────
