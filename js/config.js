@@ -56,7 +56,7 @@ const PORTFOLIO_CONFIG = {
   "portfolioVideos": [
     {
       "id": "v1",
-      "title": "Cinematic Brand Story",
+      "title": "Storytelling by Motion Graphics",
       "description": "A high-energy brand film blending dynamic transitions, color grading, and rhythm-synced cuts to create a compelling narrative.",
       "problem": "The brand struggled to connect with their audience emotionally and needed a narrative-driven center piece.",
       "goal": "Create a compelling hook and energetic middle section to keep viewer retention above 60%.",
@@ -64,10 +64,10 @@ const PORTFOLIO_CONFIG = {
       "videoUrl": "https://drive.google.com/file/d/1jWP9bC_1wyurq-syfb9PD69B1Ji4HMU_/view?usp=drivesdk",
       "tags": [
         "Brand Film",
-        "Color Grading",
+        "Storytelling",
         "Motion"
       ],
-      "ratio": "16:9",
+      "ratio": "9:16",
       "categories": [
         "Long Form"
       ],
