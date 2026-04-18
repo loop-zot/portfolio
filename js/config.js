@@ -56,15 +56,15 @@ const PORTFOLIO_CONFIG = {
     {
       "id": "v1",
       "title": "Storytelling by Motion Graphics",
-      "description": "A high-energy brand film blending dynamic transitions, color grading, and rhythm-synced cuts to create a compelling narrative.",
-      "problem": "The brand struggled to connect with their audience emotionally and needed a narrative-driven center piece.",
-      "goal": "Create a compelling hook and energetic middle section to keep viewer retention above 60%.",
-      "solution": "Blended dynamic transitions, modern color grading, and rhythm-synced cuts for a high-energy brand film.",
+      "description": "A conversational clip transformed into a focused storytelling piece that explores the core idea of “change” in editing. The final video balances clarity and rhythm, using intentional pacing and subtle visuals to guide the viewer through a clear narrative progression.",
+      "problem": "The raw conversation lacked structure and contained filler words, making the message feel scattered and less impactful. The pacing was inconsistent, which reduced viewer retention and diluted the core idea being communicated.",
+      "goal": "To convert the unstructured dialogue into a clear, engaging narrative that emphasizes the concept of storytelling through change. The aim was to improve flow, maintain viewer attention, and ensure the message lands with clarity and purpose.",
+      "solution": "Refined the dialogue by removing filler words and tightening sentences to create a smoother, more coherent flow. Structured the edit around the central idea of progression, using pacing as the primary tool—alternating between faster cuts and intentional holds to match the speaker’s energy and emphasize key moments. Integrated minimal, high-end motion graphics, including directional paths and clean layouts, to visually represent the transition from one idea to another. Focused on maintaining a clean, professional aesthetic while enhancing clarity, rhythm, and overall engagement.",
       "videoUrl": "https://drive.google.com/file/d/1jWP9bC_1wyurq-syfb9PD69B1Ji4HMU_/view?usp=drivesdk",
       "tags": [
-        "Brand Film",
         "Storytelling",
-        "Motion"
+        "Motion Graphics",
+        "Animation"
       ],
       "ratio": "9:16",
       "categories": [
@@ -80,7 +80,7 @@ const PORTFOLIO_CONFIG = {
       "problem": "Previous videos had a steep drop-off rate within the first 30 seconds of the video.",
       "goal": "Maximize viewer retention using visual pattern interrupts and fast-paced editing.",
       "solution": "Implemented jump cuts, dynamic zooms, text overlays, and an active sound design layer.",
-      "videoUrl": "https://drive.google.com/file/d/1jWP9bC_1wyurq-syfb9PD69B1Ji4HMU_/view?usp=drivesdk",
+      "videoUrl": "https://www.youtube.com/shorts/sY2ZxTgvoXs",
       "tags": [
         "YouTube",
         "Retention",
