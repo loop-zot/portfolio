@@ -111,6 +111,7 @@ function initDashboard(config) {
   renderAdminSettingsForm(liveConfig);
 
   setupFilterModal(liveConfig);
+  setupAdminTabs();
 
   // Save button
   document.getElementById('save-btn').addEventListener('click', () => {
@@ -760,6 +761,35 @@ if (typeof module !== 'undefined' && module.exports) {
   URL.revokeObjectURL(url);
 
   showToast('Config exported! Replace js/config.js with the downloaded file.', 'success');
+}
+
+
+// ── Admin Tab Switching ─────────────────────
+
+function setupAdminTabs() {
+  const tabs = document.querySelectorAll('.admin-tab');
+  const panes = document.querySelectorAll('.admin-tab-pane');
+
+  if (tabs.length === 0 || panes.length === 0) return;
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      // Deactivate all
+      tabs.forEach(t => t.classList.remove('active'));
+      panes.forEach(p => p.classList.remove('active'));
+
+      // Activate selected
+      tab.classList.add('active');
+      const targetId = tab.dataset.tab;
+      const targetPane = document.getElementById(targetId);
+      if (targetPane) {
+        targetPane.classList.add('active');
+      }
+
+      // Scroll to top for clean editing experience
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  });
 }
 
 

@@ -143,6 +143,80 @@
   gap: 12px;
 }
 
+/* ── Admin Tab Navigation ────────────────── */
+.admin-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 32px;
+  padding: 6px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 40px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.admin-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.admin-tab {
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid transparent;
+  white-space: nowrap;
+  transition: all 0.3s var(--ease-smooth);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.admin-tab:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.admin-tab.active {
+  background: var(--accent);
+  color: #000;
+  border-color: var(--accent);
+  font-weight: 600;
+}
+
+/* ── Tab Content Panes ───────────────────── */
+.admin-tab-content {
+  position: relative;
+}
+
+.admin-tab-pane {
+  display: none;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.3s var(--ease-smooth), transform 0.3s var(--ease-smooth);
+}
+
+.admin-tab-pane.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .admin-tabs {
+    gap: 6px;
+    padding: 4px;
+    margin-bottom: 24px;
+  }
+  .admin-tab {
+    padding: 8px 14px;
+    font-size: 0.78rem;
+  }
+}
+
 .admin-btn {
   padding: 10px 20px;
   border-radius: var(--radius-sm);
