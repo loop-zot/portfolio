@@ -69,7 +69,8 @@ const PORTFOLIO_CONFIG = {
       ],
       "ratio": "9:16",
       "categories": [
-        "Long Form"
+        "Long Form",
+        "Short Form"
       ],
       "isVisible": true
     },
