@@ -10,7 +10,7 @@
 
 const PORTFOLIO_CONFIG = {
   "personalInfo": {
-    "introText": "Introducing",
+    "introText": "Introducing Myself",
     "name": "Syed Sufiyan",
     "role": "Video Editor",
     "tagline": "Crafting high-retention edits that turn attention into impact."
