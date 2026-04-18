@@ -335,7 +335,8 @@ function renderPortfolio(config) {
         </div>
         <div class="video-info">
           <h3 class="video-title">${video.title}</h3>
-          <p class="video-description">${(video.description || video.problem || '').substring(0, 150)}${(video.description || video.problem || '').length > 150 ? '...' : ''}</p>
+          <p class="video-description${(video.description || video.problem || '').length > 150 ? ' truncated' : ''}" data-full-text="${(video.description || video.problem || '').replace(/"/g, '&quot;')}">${(video.description || video.problem || '').length > 150 ? (video.description || video.problem || '').substring(0, 150) + '...' : (video.description || video.problem || '')}</p>
+          ${(video.description || video.problem || '').length > 150 ? '<button class="read-more-btn" aria-expanded="false">Read More</button>' : ''}
           ${tagsHTML ? `<div class="video-tags">${tagsHTML}</div>` : ''}
           <button class="view-case-study-btn" data-video-id="${video.id}">
             View Details
@@ -435,6 +436,27 @@ function renderPortfolio(config) {
     btn.addEventListener('click', () => {
       const v = visibleVideos.find(vid => vid.id === btn.dataset.videoId);
       if (v) openCaseStudy(v);
+    });
+  });
+
+  // ── Read More Toggle ────────────
+  portfolio.querySelectorAll('.read-more-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const desc = btn.previousElementSibling;
+      const fullText = desc.dataset.fullText;
+      const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+
+      if (isExpanded) {
+        desc.textContent = fullText.substring(0, 150) + '...';
+        desc.classList.add('truncated');
+        btn.textContent = 'Read More';
+        btn.setAttribute('aria-expanded', 'false');
+      } else {
+        desc.textContent = fullText;
+        desc.classList.remove('truncated');
+        btn.textContent = 'Show Less';
+        btn.setAttribute('aria-expanded', 'true');
+      }
     });
   });
 
