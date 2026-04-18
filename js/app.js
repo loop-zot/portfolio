@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setupHamburgerMenu();
   setupTabSwitching();
   setupScrollGradient();
+  setupHireMeReveal();
 });
 
 
@@ -604,6 +605,32 @@ function setupTabSwitching() {
 function setupScrollGradient() {
   // Disabled: Translating a strict fixed viewport container upward
   // causes its bottom bounds to lift into view, creating a hard cutoff line.
+}
+
+// ── Hire Me Button Reveal ───────────────────
+function setupHireMeReveal() {
+  const hireBtn = document.querySelector('.hire-me-btn');
+  const bioBlock = document.querySelector('.hero-bio-block');
+
+  if (!hireBtn) return;
+
+  // Use the bio block as trigger, or fall back to the hero section
+  const trigger = bioBlock || document.getElementById('hero');
+  if (!trigger) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) {
+        // Bio block is out of view — show the button
+        hireBtn.classList.add('visible');
+      } else {
+        // Bio block is in view — hide the button
+        hireBtn.classList.remove('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  observer.observe(trigger);
 }
 
 // ── Feedback Renderer ───────────────────────
