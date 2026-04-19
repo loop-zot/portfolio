@@ -610,9 +610,10 @@ function openCaseStudy(video) {
   modal.classList.add('active');
   document.body.style.overflow = 'hidden';
 
-  // Scroll the content area to the top
+  // Scroll the content area to the top (Handle both desktop internal scroll and mobile overlay scroll)
   const scrollArea = modal.querySelector('.case-study-scroll-area');
   if (scrollArea) scrollArea.scrollTop = 0;
+  modal.scrollTop = 0; // Fixed: Reset overlay scroll for mobile "natural scroll" model
 
   const closeFn = () => {
     modal.classList.remove('active');
