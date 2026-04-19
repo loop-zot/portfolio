@@ -13,7 +13,7 @@ const PORTFOLIO_CONFIG = {
     "introText": "Introducing Myself",
     "name": "Syed Sufiyan",
     "role": "Video Editor",
-    "tagline": "Crafting high-retention edits that turn attention into impact."
+    "tagline": "Turning Thoughts into Timeline"
   },
   "availability": {
     "isAvailable": true,
@@ -152,15 +152,9 @@ const PORTFOLIO_CONFIG = {
   ],
   "feedbacks": [
     {
-      "id": "f1",
-      "personName": "Creative Director, Apex Brands",
-      "feedbackText": "The level of detail and rhythm in his edits is unmatched. Turned our raw footage into an absolutely captivating story that drove massive engagement.",
-      "isVisible": true
-    },
-    {
-      "id": "f2",
-      "personName": "Lead Creator, ViralWave",
-      "feedbackText": "Syed completely understands the psychology of short-form content. His edits consistently bump our retention rates by over 40%.",
+      "id": "f1776566768395",
+      "personName": "Gowri Sankar",
+      "feedbackText": "It was such a pleasure working with you sufiyan, on this project! Your dedication, creativity, and patience truly stood out. You went above and beyond, making multiple revisions to ensure the video was perfect. I genuinely appreciate how much effort you put into understanding my vision and bringing it to life. 🌟 Your professionalism and positive attitude made the entire process smooth and enjoyable. Looking forward to collaborating on more projects together! 🙌👏",
       "isVisible": true
     }
   ],
@@ -168,17 +162,17 @@ const PORTFOLIO_CONFIG = {
     {
       "id": "q1",
       "question": "What software do you use for editing?",
-      "answer": "I primarily edit using Adobe Premiere Pro and After Effects for advanced motion graphics and VFX."
+      "answer": "I primarily use DaVinci Resolve for video editing and advanced motion graphics."
     },
     {
       "id": "q2",
       "question": "What is your typical turnaround time?",
-      "answer": "For short-form content (Reels/Shorts), my turnaround is typically 24-48 hours. Larger projects like documentaries or music videos take 1-2 weeks."
+      "answer": "For short-form content (Reels/Shorts), my turnaround is typically 24-48 hours. Larger projects like documentaries take 1-2 weeks."
     },
     {
       "id": "q3",
       "question": "Do you offer revisions?",
-      "answer": "Yes, every project includes up to 2 rounds of revisions to ensure we nail the exact vision and pacing you're looking for."
+      "answer": "I offer two complimentary revision rounds with every video editing project. Any additional revisions beyond these will be billed separately.\n"
     }
   ],
   "admin": {
