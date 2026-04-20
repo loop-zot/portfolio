@@ -316,7 +316,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: center; /* Center the layout-row wrapper */
-  padding: 120px 80px 60px; 
+  padding: 120px 40px 60px; /* Reduced from 80px to give more room for side-by-side */
   overflow: visible;
   z-index: 10;
   max-width: 1400px;
@@ -337,11 +337,13 @@ button {
 .hero-content {
   text-align: left;
   max-width: 600px;
+  flex-shrink: 1; /* Allow slight shrinkage to prevent wrapping on smaller desktops */
 }
 
 .hero-bio-block {
   flex: 1;
   max-width: 480px;
+  flex-shrink: 1; /* Allow slight shrinkage if space is tight */
   background: rgba(17, 17, 17, 0.4);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
