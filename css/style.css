@@ -314,6 +314,7 @@ button {
   position: relative;
   min-height: 75vh;
   display: flex;
+  flex-direction: row; /* Force side-by-side on desktop */
   align-items: center;
   justify-content: space-between;
   gap: 40px;
