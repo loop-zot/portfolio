@@ -229,9 +229,6 @@ function renderHero(config) {
         </div>
       ` : ''}
     </div>
-    </div>
-
-    ${bioHTML}
 
     <div class="scroll-hint">
       <div class="scroll-hint-line"></div>
@@ -255,13 +252,18 @@ function normalizeVideoUrl(url) {
   if (url.includes('drive.google.com')) {
     const driveRegex = /\/file\/d\/([a-zA-Z0-9_-]+)/;
     const match = url.match(driveRegex);
-    if (match && match[1]) {
-      return `https://drive.google.com/file/d/${match[1]}/preview`;
-    }
+    let driveId = null;
     
-    const idParamMatch = url.match(/id=([a-zA-Z0-9_-]+)/);
-    if (idParamMatch && idParamMatch[1]) {
-      return `https://drive.google.com/file/d/${idParamMatch[1]}/preview`;
+    if (match && match[1]) {
+      driveId = match[1];
+    } else {
+      const idParamMatch = url.match(/id=([a-zA-Z0-9_-]+)/);
+      if (idParamMatch && idParamMatch[1]) driveId = idParamMatch[1];
+    }
+
+    if (driveId) {
+      // Use direct preview link with autoplay
+      return `https://drive.google.com/file/d/${driveId}/preview?autoplay=1`;
     }
     return url;
   }
@@ -272,12 +274,10 @@ function normalizeVideoUrl(url) {
     return `${cleanUrl}/embed`;
   }
 
-  // Backup regex generation
-  const ytRegex = /(?:v=|vi=|youtu\.be\/|\/v\/|\/embed\/|\/shorts\/|\/e\/|\/live\/|^)([a-zA-Z0-9_-]{11})(?:[?&/]|$)/i;
-  let match = url.match(ytRegex);
-
-  if (match) {
-    return `https://www.youtube.com/embed/${match[1]}?autoplay=1&rel=0`;
+  // YouTube Embed
+  const ytId = getYouTubeId(url);
+  if (ytId) {
+    return `https://www.youtube.com/embed/${ytId}?autoplay=1&mute=0&rel=0&modestbranding=1&controls=1&showinfo=0`;
   }
   return url;
 }
@@ -312,17 +312,9 @@ function renderPortfolio(config) {
     const tagsHTML = video.tags ? video.tags.map(tag => `<span class="video-tag">${tag}</span>`).join('') : '';
     const ratioClass = video.ratio === '9:16' ? 'ratio-vertical' : 'ratio-horizontal';
     
-    const ytId = getYouTubeId(video.videoUrl);
-    let bgStyle = '';
+    // Remove background thumbnails as per user request (want clean black screen)
+    const bgStyle = ''; 
 
-    if (ytId) {
-      bgStyle = `style="background-image: url('https://img.youtube.com/vi/${ytId}/maxresdefault.jpg'); background-size: cover; background-position: center;"`;
-    } else if (video.videoUrl.includes('drive.google.com')) {
-      const match = video.videoUrl.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
-      const idMatch = video.videoUrl.match(/id=([a-zA-Z0-9_-]+)/);
-      const driveId = (match && match[1]) ? match[1] : (idMatch ? idMatch[1] : null);
-      if (driveId) bgStyle = `style="background-image: url('https://drive.google.com/thumbnail?id=${driveId}&sz=w1920-h1080'); background-size: cover; background-position: center;"`;
-    }
 
     return `
       <div class="video-block ${ratioClass} ${isReversed ? 'reversed' : ''}" data-video-id="${video.id}" data-categories="${(video.categories || []).join(',')}">
@@ -469,14 +461,12 @@ function renderPortfolio(config) {
     container.innerHTML = '';
 
     const iframe = document.createElement('iframe');
-    if (ytId) iframe.src = `https://www.youtube.com/embed/${ytId}?autoplay=1&rel=0&modestbranding=1`;
-    else iframe.src = normalizeVideoUrl(rawSrc);
+    iframe.src = normalizeVideoUrl(rawSrc);
 
     iframe.dataset.originalSrc = rawSrc;
     iframe.setAttribute('frameborder', '0');
     iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
     iframe.setAttribute('allowfullscreen', 'true');
-    iframe.loading = 'lazy';
 
     container.appendChild(iframe);
   });
@@ -503,13 +493,8 @@ function stopAllVideos() {
       }
 
       if (rawSrc) {
-        const ytId = getYouTubeId(rawSrc);
-        let bgStyle = '';
-        if (ytId) {
-          bgStyle = `style="background-image: url('https://img.youtube.com/vi/${ytId}/maxresdefault.jpg'); background-size: cover; background-position: center;"`;
-        }
         container.innerHTML = `
-          <div class="video-placeholder" ${bgStyle} data-src="${rawSrc}" role="button" aria-label="Play video" tabindex="0">
+          <div class="video-placeholder" data-src="${rawSrc}" role="button" aria-label="Play video" tabindex="0">
             <div class="play-icon">
               <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
             </div>
@@ -568,14 +553,8 @@ function openCaseStudy(video) {
     iframe.setAttribute('allowfullscreen', 'true');
     videoSlot.appendChild(iframe);
   } else {
-    // Video was NOT playing → show THUMBNAIL (No Autoplay)
-    const ytId = getYouTubeId(video.videoUrl);
-    let bgStyle = '';
-    if (ytId) {
-      bgStyle = `style="background-image: url('https://img.youtube.com/vi/${ytId}/maxresdefault.jpg'); background-size: cover; background-position: center;"`;
-    }
     videoSlot.innerHTML = `
-      <div class="video-placeholder" ${bgStyle} data-src="${video.videoUrl}" role="button" aria-label="Play ${video.title}" tabindex="0">
+      <div class="video-placeholder" data-src="${video.videoUrl}" role="button" aria-label="Play ${video.title}" tabindex="0">
         <div class="play-icon">
           <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
         </div>
@@ -585,10 +564,8 @@ function openCaseStudy(video) {
     // Add manual play listener for the popup
     const placeholder = videoSlot.querySelector('.video-placeholder');
     placeholder.addEventListener('click', () => {
-      const id = getYouTubeId(video.videoUrl);
       const iframe = document.createElement('iframe');
-      if (id) iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`;
-      else iframe.src = normalizeVideoUrl(video.videoUrl);
+      iframe.src = normalizeVideoUrl(video.videoUrl);
       iframe.setAttribute('frameborder', '0');
       iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
       iframe.setAttribute('allowfullscreen', 'true');

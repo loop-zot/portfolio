@@ -836,39 +836,41 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--bg-card);
+  background: #0d0d0d; /* Pure dark background as requested */
   cursor: pointer;
-  transition: background 0.3s;
-}
-
-.video-placeholder:hover {
-  background: var(--bg-card-hover);
-}
-
-.play-icon {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  background: rgba(0, 211, 200, 0.12);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 211, 200, 0.2);
   transition: all 0.3s var(--ease-smooth);
 }
 
+.video-placeholder:hover {
+  background: #000;
+}
+
+.play-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5); /* Dark semi-transparent circle */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid rgba(0, 211, 200, 0.4); /* Subtle teal/green border */
+  transition: all 0.4s var(--ease-out-back);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+}
+
 .video-placeholder:hover .play-icon {
-  background: rgba(0, 211, 200, 0.2);
-  transform: scale(1.08);
-  box-shadow: 0 0 20px rgba(0, 211, 200, 0.15);
+  background: rgba(0, 211, 200, 0.1);
+  border-color: rgba(0, 211, 200, 0.8);
+  transform: scale(1.15);
+  box-shadow: 0 0 40px rgba(0, 211, 200, 0.15);
 }
 
 .play-icon svg {
-  width: 24px;
-  height: 24px;
-  margin-left: 3px;
-  color: var(--accent);
+  width: 28px;
+  height: 28px;
+  margin-left: 4px; /* Optical centering for triangle */
+  color: #00ffca; /* Bright centered green/teal triangle */
+  filter: drop-shadow(0 0 8px rgba(0, 255, 202, 0.4));
 }
 
 /* ── Video Info ───────────────────────────── */
