@@ -128,7 +128,8 @@ function animateHeroEntry() {
     const element = document.querySelector(el);
     if (element) {
       setTimeout(() => {
-        element.style.transition = 'opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out)';
+        const duration = el === '.hero-bio-block' ? '1.2s' : '0.8s';
+        element.style.transition = `opacity ${duration} var(--ease-out), transform ${duration} var(--ease-out)`;
         element.style.opacity = '1';
         element.style.transform = 'translateY(0)';
       }, delay);

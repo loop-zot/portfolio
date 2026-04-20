@@ -359,6 +359,10 @@ button {
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   padding: 40px;
+  
+  /* Initial state for reveal animation */
+  opacity: 0;
+  transform: translateY(30px);
 }
 
 @media (min-width: 901px) {
