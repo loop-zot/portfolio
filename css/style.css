@@ -323,32 +323,51 @@ button {
   margin: 0 auto;
 }
 
+/* Mobile First: Stacks vertically by default */
 #hero .hero-layout-row {
-  display: grid !important;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 60px;
+  justify-content: center;
+  gap: 40px;
   width: 100%;
   position: relative;
   z-index: 1;
+  text-align: center;
 }
 
 #hero .hero-content {
-  text-align: left;
   width: 100%;
-  max-width: 650px;
+  text-align: center;
 }
 
 #hero .hero-bio-block {
   width: 100%;
   max-width: 500px;
-  justify-self: end;
+  text-align: left;
 }
 
-.hero-content {
-  text-align: left;
-  max-width: 600px;
-  flex-shrink: 1; /* Allow slight shrinkage to prevent wrapping on smaller desktops */
+/* Desktop: Side-by-side override */
+@media (min-width: 851px) {
+  #hero .hero-layout-row {
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    justify-content: space-between !important;
+    text-align: left !important;
+    gap: 60px !important;
+  }
+
+  #hero .hero-content {
+    flex: 1 !important;
+    max-width: 650px !important;
+    text-align: left !important;
+  }
+
+  #hero .hero-bio-block {
+    flex: 1 !important;
+    max-width: 480px !important;
+    margin-left: auto !important;
+  }
 }
 
 .hero-bio-block {
@@ -419,25 +438,7 @@ button {
   color: var(--accent);
 }
 
-@media (max-width: 850px) {
-  #hero .hero-layout-row {
-    grid-template-columns: 1fr !important;
-    text-align: center;
-    gap: 40px;
-  }
-  #hero .hero-content {
-    text-align: center;
-    margin-bottom: 40px;
-    max-width: 100%;
-  }
-  #hero .hero-bio-block {
-    text-align: left;
-    width: 100%;
-    margin: 0 auto;
-    max-width: 500px;
-    justify-self: center;
-  }
-}
+/* Hero responsiveness handled above via min-width for stability */
 
 
 /* ── Availability Tag System ──────────────── */
