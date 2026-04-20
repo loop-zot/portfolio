@@ -316,7 +316,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: center; /* Center the layout-row wrapper */
-  padding: 120px 40px 60px; /* Reduced from 80px to give more room for side-by-side */
+  padding: 120px 40px 60px !important; /* Force reduced padding to give more room */
   overflow: visible;
   z-index: 10;
   max-width: 1400px;
@@ -326,6 +326,7 @@ button {
 .hero-layout-row {
   display: flex;
   flex-direction: row;
+  flex-wrap: nowrap !important; /* Absolutely prevent stacking on desktop */
   align-items: center;
   justify-content: space-between;
   gap: 40px;
@@ -408,14 +409,15 @@ button {
   color: var(--accent);
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 850px) { /* Lowered from 1024px to keep side-by-side on small laptops/tablets */
   .hero {
-    padding: 120px 24px 60px;
+    padding: 120px 24px 60px !important;
   }
   .hero-layout-row {
     flex-direction: column;
     text-align: center;
     justify-content: center;
+    flex-wrap: wrap !important; /* Allow wrapping only on mobile */
   }
   .hero-content {
     text-align: center;
