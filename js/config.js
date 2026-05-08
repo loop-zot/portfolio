@@ -94,22 +94,21 @@ const PORTFOLIO_CONFIG = {
       "isVisible": true
     },
     {
-      "id": "v3",
-      "title": "3D Tracking Concept Breakdown",
-      "description": "An educational reel designed to introduce and position 3D tracking as a high-value editing skill. The video combines explanation, real-world applications, and a strong call-to-action, making it both informative and conversion-focused.",
-      "problem": "3D tracking is often perceived as complex and difficult to learn, leading to low engagement and drop-offs in tutorial content. Additionally, without clear context or application, viewers may not see its importance or feel motivated to learn it.",
-      "goal": "To simplify the concept of 3D tracking, highlight its real-world value, and drive audience action by offering a clear learning pathway and resource. The objective was to attract the right audience and convert interest into engagement.",
-      "solution": "• Opened with a direct hook targeting editors to immediately capture the right audience\n• Simplified the concept of 3D tracking using clear, easy-to-understand language\n• Highlighted real-world applications (movies, ads, digital screens) to increase perceived value\n• Built curiosity by questioning the importance of mastering the effect\n• Structured the content to progressively build understanding and interest\n• Listed key areas and variations of the effect to show depth and scope\n• Reinforced learning with motion graphics to visually demonstrate the concept\n• Positioned the effect as a must-have skill to create urgency and relevance\n• Provided a valuable PDF resource with curated tutorials for deeper learning\n• Ended with a clear call-to-action to drive comments, follows, and engagement",
-      "videoUrl": "https://youtube.com/shorts/Sp7buddl1Ss?feature=share",
+      "id": "v1778244628970",
+      "title": "Adaptive Short-Form Financial Explainer Edit",
+      "description": "A financial explainer video that uses a spring metaphor to make stock market behavior easier to understand. The edit combines animated visuals and clean pacing to turn a complex topic into a simple, engaging story.",
+      "problem": "Stock market concepts often feel confusing and too technical for general audiences. Without strong visualization, viewers struggle to understand why falling markets can still create opportunity.",
+      "goal": "To make the concept of market drops easy to visualize and understand through simple visual storytelling. The goal was to help viewers emotionally and logically connect with the speaker’s explanation instead of feeling intimidated by financial terms.\n",
+      "solution": "• Recreated the original motion graphics in a vertical 9:16 format optimized for short-form platforms.\n• Used the spring animation to visually explain market compression in a simple and memorable way.\n• Maintained accurate animation timing to preserve the meaning and flow of the original explanation.\n• Added a custom glow effect during the “stored energy” moment to make the idea feel more impactful.\n• Synced charts, counters, and animations tightly with the speaker’s words to improve understanding.\n• Structured transitions carefully to maintain smooth pacing and avoid overwhelming the viewer.\n• Combined charts, animations, and speaker footage cleanly to make the explanation visually easy to follow.\n• Focused on turning a complex financial topic into a clear visual experience anyone could understand.",
+      "videoUrl": "https://drive.google.com/file/d/1Woga_T8Cgne_xCSzBXH66byugOXxX8z7/view?usp=sharing",
       "tags": [
-        "Effect Tutorial",
-        "Concept Teaching",
-        "Motion Graphics"
+        "Market Psychology",
+        "Stock Market Education",
+        "Investment Mindset",
+        "Financial Explainer"
       ],
       "ratio": "9:16",
-      "categories": [
-        "Short Form"
-      ],
+      "categories": [],
       "isVisible": true
     }
   ],
