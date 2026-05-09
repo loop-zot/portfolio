@@ -100,7 +100,7 @@ const PORTFOLIO_CONFIG = {
       "problem": "Stock market concepts often feel confusing and too technical for general audiences. Without strong visualization, viewers struggle to understand why falling markets can still create opportunity.",
       "goal": "To make the concept of market drops easy to visualize and understand through simple visual storytelling. The goal was to help viewers emotionally and logically connect with the speaker’s explanation instead of feeling intimidated by financial terms.\n",
       "solution": "• Recreated the original motion graphics in a vertical 9:16 format optimized for short-form platforms.\n• Used the spring animation to visually explain market compression in a simple and memorable way.\n• Maintained accurate animation timing to preserve the meaning and flow of the original explanation.\n• Added a custom glow effect during the “stored energy” moment to make the idea feel more impactful.\n• Synced charts, counters, and animations tightly with the speaker’s words to improve understanding.\n• Structured transitions carefully to maintain smooth pacing and avoid overwhelming the viewer.\n• Combined charts, animations, and speaker footage cleanly to make the explanation visually easy to follow.\n• Focused on turning a complex financial topic into a clear visual experience anyone could understand.",
-      "videoUrl": "https://drive.google.com/file/d/1Woga_T8Cgne_xCSzBXH66byugOXxX8z7/view?usp=sharing",
+      "videoUrl": "https://drive.google.com/file/d/1EbcJCpr5Ryk4zDDHd30-mxR4pFikanIE/view?usp=sharing",
       "tags": [
         "Market Psychology",
         "Stock Market Education",
