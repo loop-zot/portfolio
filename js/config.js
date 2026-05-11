@@ -110,6 +110,24 @@ const PORTFOLIO_CONFIG = {
       "ratio": "9:16",
       "categories": [],
       "isVisible": true
+    },
+    {
+      "id": "v1778475532841",
+      "title": "Cinematic Emotional Storytelling Edit",
+      "description": "A minimalist, emotionally-driven edit built around a powerful interview clip from Lewis Hamilton. Instead of relying on heavy effects, the edit uses cinematic B-roll, clean typography, and intentional pacing to create a deep emotional connection and make the message feel personal and impactful.",
+      "problem": "In today’s fast-paced short-form content space, meaningful messages often get ignored because of overstimulation and constant visual noise. The challenge was to hold attention and create emotional impact without depending on flashy editing techniques.",
+      "goal": "To create a heart-first viewing experience that makes the audience truly feel the speaker’s message. The focus was on emotion, reflection, and clarity—using pacing, visuals, and typography to strengthen the impact of the conversation.",
+      "solution": "• Carefully selected cinematic B-roll that visually matched the speaker’s journey, helping the audience emotionally connect with the message.\n• Used a clean two-tone typography style to highlight important emotional words without cluttering the screen.\n• Added blur-to-focus transitions to smoothly shift viewers from the interview into the emotional story moments.\n• Synced cuts with the natural pauses in the speaker’s voice to create a calm and reflective pacing style.\n• Structured the visuals to move from struggle to growth, creating a subtle emotional progression throughout the edit.\n• Maintained a clean and centered frame composition to keep viewers focused on the emotion rather than distractions.\n• Avoided over-editing and prioritized emotional storytelling to prove versatility beyond high-energy edits.",
+      "videoUrl": "https://drive.google.com/file/d/1CMtALUnEUQ0x_Mx4jXSblY6DGujzPmKW/view?usp=sharing",
+      "tags": [
+        "Emotional Storytelling",
+        "Motivational Cinematic Edit",
+        "Fear And Growth",
+        "Inspirational Mindset"
+      ],
+      "ratio": "9:16",
+      "categories": [],
+      "isVisible": true
     }
   ],
   "feedbacks": [
