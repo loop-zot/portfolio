@@ -520,15 +520,16 @@ function stopAllVideos() {
   });
 }
 
-// ── Force clean Drive player layout on mobile ──────────
-// Drive serves a zoomed/broken mobile UI when the iframe is narrow.
-// Rendering at 640px and scaling down forces the clean desktop player.
+// ── Force clean Drive player layout ─────────────────────
+// Drive randomly serves a "new" (transparent) or "legacy" (solid bar)
+// player based on the iframe viewport width. Rendering at 960px and
+// scaling down forces Drive to always serve the modern transparent UI.
 function applyDriveScale(iframe, container) {
   if (!iframe || !container) return;
   requestAnimationFrame(() => {
     const cw = container.clientWidth;
     const ch = container.clientHeight;
-    const BASE = 640;
+    const BASE = 960;
     if (cw && ch && cw < BASE) {
       const s = cw / BASE;
       iframe.style.width = BASE + 'px';
