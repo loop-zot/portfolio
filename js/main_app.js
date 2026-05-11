@@ -464,101 +464,79 @@ function renderPortfolio(config) {
 
     // Load the clicked video
     const rawSrc = placeholder.dataset.src;
+    const ytId = getYouTubeId(rawSrc);
     const container = placeholder.parentElement;
     container.innerHTML = '';
 
-    // Use native <video> for Drive, iframe for everything else
-    if (getDriveId(rawSrc)) {
-      mountDriveVideo(container, rawSrc, true);
-    } else {
-      const iframe = document.createElement('iframe');
-      iframe.src = normalizeVideoUrl(rawSrc);
-      iframe.dataset.originalSrc = rawSrc;
-      iframe.setAttribute('frameborder', '0');
-      iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
-      iframe.setAttribute('allowfullscreen', 'true');
-      container.appendChild(iframe);
+    const iframe = document.createElement('iframe');
+    iframe.src = normalizeVideoUrl(rawSrc);
+
+    iframe.dataset.originalSrc = rawSrc;
+    iframe.setAttribute('frameborder', '0');
+    iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+    iframe.setAttribute('allowfullscreen', 'true');
+
+    container.appendChild(iframe);
+
+    // Force clean Drive player on mobile
+    if (rawSrc.includes('drive.google.com')) {
+      applyDriveScale(iframe, container);
     }
   });
 }
 
 // ── Stop all playing videos and revert to thumbnails ────
 function stopAllVideos() {
+  // Target both main portfolio and popup content
   const roots = [
     document.getElementById('portfolio'),
     document.getElementById('case-study-content')
   ];
-
-  const placeholderHTML = (src) => `
-    <div class="video-placeholder" data-src="${src}" role="button" aria-label="Play video" tabindex="0">
-      <div class="play-icon">
-        <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-      </div>
-    </div>`;
-
+  
   roots.forEach(root => {
     if (!root) return;
-
-    // Stop iframes (YouTube / fallback)
-    root.querySelectorAll('.video-container iframe, .cs-video-container iframe').forEach(el => {
-      const container = el.parentElement;
-      let rawSrc = el.dataset.originalSrc;
-      if (!rawSrc && el.src.includes('youtube.com/embed/')) {
-        const id = el.src.split('embed/')[1].split('?')[0];
+    // Find iframes in either container
+    root.querySelectorAll('.video-container iframe, .cs-video-container iframe').forEach(iframe => {
+      const container = iframe.parentElement;
+      // Get source from data attribute or src
+      let rawSrc = iframe.dataset.originalSrc;
+      if (!rawSrc && iframe.src.includes('youtube.com/embed/')) {
+        const id = iframe.src.split('embed/')[1].split('?')[0];
         rawSrc = `https://www.youtube.com/watch?v=${id}`;
       }
-      container.innerHTML = rawSrc ? placeholderHTML(rawSrc) : '';
-    });
 
-    // Stop native <video> elements (Drive)
-    root.querySelectorAll('.video-container video, .cs-video-container video').forEach(el => {
-      el.pause();
-      el.removeAttribute('src');
-      el.load(); // release network resources
-      const container = el.parentElement;
-      const rawSrc = el.dataset.originalSrc;
-      container.innerHTML = rawSrc ? placeholderHTML(rawSrc) : '';
+      if (rawSrc) {
+        container.innerHTML = `
+          <div class="video-placeholder" data-src="${rawSrc}" role="button" aria-label="Play video" tabindex="0">
+            <div class="play-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            </div>
+          </div>
+        `;
+      } else {
+        container.innerHTML = ''; 
+      }
     });
   });
 }
 
-// ── Google Drive helpers ────────────────────────────────
-// Extract the file ID from any Drive URL variant
-function getDriveId(url) {
-  if (!url || !url.includes('drive.google.com')) return null;
-  const m = url.match(/\/file\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/);
-  return m ? m[1] : null;
-}
-
-// Mount a native <video> element for a Drive file.
-// Bypasses Drive's embedded player entirely so we always get the
-// browser's own transparent/minimal controls — no A/B testing.
-function mountDriveVideo(container, rawSrc, autoplay) {
-  const id = getDriveId(rawSrc);
-  if (!id) return;
-
-  const video = document.createElement('video');
-  video.dataset.originalSrc = rawSrc;
-  video.controls = true;
-  video.playsInline = true;
-  video.preload = 'auto';
-  video.autoplay = !!autoplay;
-  video.src = 'https://drive.google.com/uc?export=download&id=' + id;
-
-  // If the direct stream fails, fall back to the iframe /preview embed
-  video.addEventListener('error', function fallback() {
-    video.removeEventListener('error', fallback);
-    container.innerHTML = '';
-    const iframe = document.createElement('iframe');
-    iframe.src = 'https://drive.google.com/file/d/' + id + '/preview';
-    iframe.dataset.originalSrc = rawSrc;
-    iframe.setAttribute('frameborder', '0');
-    iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
-    iframe.setAttribute('allowfullscreen', 'true');
-    container.appendChild(iframe);
+// ── Force clean Drive player layout on mobile ──────────
+// Drive serves a zoomed/broken mobile UI when the iframe is narrow.
+// Rendering at 640px and scaling down forces the clean desktop player.
+function applyDriveScale(iframe, container) {
+  if (!iframe || !container) return;
+  requestAnimationFrame(() => {
+    const cw = container.clientWidth;
+    const ch = container.clientHeight;
+    const BASE = 640;
+    if (cw && ch && cw < BASE) {
+      const s = cw / BASE;
+      iframe.style.width = BASE + 'px';
+      iframe.style.height = Math.round(ch / s) + 'px';
+      iframe.style.transform = 'scale(' + s + ')';
+      iframe.style.transformOrigin = '0 0';
+    }
   });
-
-  container.appendChild(video);
 }
 
 // ── Render Case Study Modal ─────────────────
@@ -571,7 +549,7 @@ function openCaseStudy(video) {
 
   // Check if this specific video is already playing on the main page
   const mainVideoBlock = document.querySelector(`.video-block[data-video-id="${video.id}"]`);
-  const isPlayingOnMain = mainVideoBlock ? !!(mainVideoBlock.querySelector('.video-container iframe') || mainVideoBlock.querySelector('.video-container video')) : false;
+  const isPlayingOnMain = mainVideoBlock ? !!mainVideoBlock.querySelector('.video-container iframe') : false;
 
   // Build modal content structure
   content.innerHTML = `
@@ -598,17 +576,16 @@ function openCaseStudy(video) {
 
   if (isPlayingOnMain) {
     // Video WAS playing → load it with AUTOPLAY in the popup
-    if (getDriveId(video.videoUrl)) {
-      mountDriveVideo(videoSlot, video.videoUrl, true);
-    } else {
-      const id = getYouTubeId(video.videoUrl);
-      const iframe = document.createElement('iframe');
-      if (id) iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`;
-      else iframe.src = normalizeVideoUrl(video.videoUrl);
-      iframe.setAttribute('frameborder', '0');
-      iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
-      iframe.setAttribute('allowfullscreen', 'true');
-      videoSlot.appendChild(iframe);
+    const id = getYouTubeId(video.videoUrl);
+    const iframe = document.createElement('iframe');
+    if (id) iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&modestbranding=1`;
+    else iframe.src = normalizeVideoUrl(video.videoUrl);
+    iframe.setAttribute('frameborder', '0');
+    iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+    iframe.setAttribute('allowfullscreen', 'true');
+    videoSlot.appendChild(iframe);
+    if (video.videoUrl.includes('drive.google.com')) {
+      applyDriveScale(iframe, videoSlot);
     }
   } else {
     videoSlot.innerHTML = `
@@ -618,20 +595,19 @@ function openCaseStudy(video) {
         </div>
       </div>
     `;
-
+    
     // Add manual play listener for the popup
     const placeholder = videoSlot.querySelector('.video-placeholder');
     placeholder.addEventListener('click', () => {
+      const iframe = document.createElement('iframe');
+      iframe.src = normalizeVideoUrl(video.videoUrl);
+      iframe.setAttribute('frameborder', '0');
+      iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
+      iframe.setAttribute('allowfullscreen', 'true');
       videoSlot.innerHTML = '';
-      if (getDriveId(video.videoUrl)) {
-        mountDriveVideo(videoSlot, video.videoUrl, true);
-      } else {
-        const iframe = document.createElement('iframe');
-        iframe.src = normalizeVideoUrl(video.videoUrl);
-        iframe.setAttribute('frameborder', '0');
-        iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
-        iframe.setAttribute('allowfullscreen', 'true');
-        videoSlot.appendChild(iframe);
+      videoSlot.appendChild(iframe);
+      if (video.videoUrl.includes('drive.google.com')) {
+        applyDriveScale(iframe, videoSlot);
       }
     });
   }
