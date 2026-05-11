@@ -477,6 +477,11 @@ function renderPortfolio(config) {
     iframe.setAttribute('allowfullscreen', 'true');
 
     container.appendChild(iframe);
+
+    // Force clean Drive player on mobile
+    if (rawSrc.includes('drive.google.com')) {
+      applyDriveScale(iframe, container);
+    }
   });
 }
 
@@ -512,6 +517,25 @@ function stopAllVideos() {
         container.innerHTML = ''; 
       }
     });
+  });
+}
+
+// ── Force clean Drive player layout on mobile ──────────
+// Drive serves a zoomed/broken mobile UI when the iframe is narrow.
+// Rendering at 640px and scaling down forces the clean desktop player.
+function applyDriveScale(iframe, container) {
+  if (!iframe || !container) return;
+  requestAnimationFrame(() => {
+    const cw = container.clientWidth;
+    const ch = container.clientHeight;
+    const BASE = 640;
+    if (cw && ch && cw < BASE) {
+      const s = cw / BASE;
+      iframe.style.width = BASE + 'px';
+      iframe.style.height = Math.round(ch / s) + 'px';
+      iframe.style.transform = 'scale(' + s + ')';
+      iframe.style.transformOrigin = '0 0';
+    }
   });
 }
 
@@ -560,6 +584,9 @@ function openCaseStudy(video) {
     iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share');
     iframe.setAttribute('allowfullscreen', 'true');
     videoSlot.appendChild(iframe);
+    if (video.videoUrl.includes('drive.google.com')) {
+      applyDriveScale(iframe, videoSlot);
+    }
   } else {
     videoSlot.innerHTML = `
       <div class="video-placeholder" data-src="${video.videoUrl}" role="button" aria-label="Play ${video.title}" tabindex="0">
@@ -579,6 +606,9 @@ function openCaseStudy(video) {
       iframe.setAttribute('allowfullscreen', 'true');
       videoSlot.innerHTML = '';
       videoSlot.appendChild(iframe);
+      if (video.videoUrl.includes('drive.google.com')) {
+        applyDriveScale(iframe, videoSlot);
+      }
     });
   }
 
