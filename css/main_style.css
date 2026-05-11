@@ -847,6 +847,17 @@ button {
   display: block;
 }
 
+/* Reset Drive iframe scaling in fullscreen mode */
+.video-container iframe:fullscreen,
+.video-container iframe:-webkit-full-screen,
+.cs-video-container iframe:fullscreen,
+.cs-video-container iframe:-webkit-full-screen {
+  transform: none !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  transform-origin: unset !important;
+}
+
 .video-placeholder {
   position: absolute;
   inset: 0;

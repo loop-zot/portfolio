@@ -524,20 +524,53 @@ function stopAllVideos() {
 // Drive randomly serves a "new" (transparent) or "legacy" (solid bar)
 // player based on the iframe viewport width. Rendering at 960px and
 // scaling down forces Drive to always serve the modern transparent UI.
+// Applied synchronously (no rAF) so the iframe sees 960px before
+// Drive's player JS initialises — eliminates the race condition that
+// let the legacy player slip through.
+let _driveFullscreenReady = false;
+
 function applyDriveScale(iframe, container) {
   if (!iframe || !container) return;
-  requestAnimationFrame(() => {
-    const cw = container.clientWidth;
-    const ch = container.clientHeight;
-    const BASE = 960;
-    if (cw && ch && cw < BASE) {
-      const s = cw / BASE;
-      iframe.style.width = BASE + 'px';
-      iframe.style.height = Math.round(ch / s) + 'px';
-      iframe.style.transform = 'scale(' + s + ')';
-      iframe.style.transformOrigin = '0 0';
-    }
-  });
+  const cw = container.clientWidth;
+  const ch = container.clientHeight;
+  const BASE = 960;
+  if (cw && ch && cw < BASE) {
+    const s = cw / BASE;
+    iframe.style.width = BASE + 'px';
+    iframe.style.height = Math.round(ch / s) + 'px';
+    iframe.style.transform = 'scale(' + s + ')';
+    iframe.style.transformOrigin = '0 0';
+    // HTML attributes act as additional signal to Drive's player picker
+    iframe.setAttribute('width', BASE);
+    iframe.setAttribute('height', Math.round(ch / s));
+  }
+
+  // One-time setup: listen for fullscreen changes to fix zoom
+  if (!_driveFullscreenReady) {
+    _driveFullscreenReady = true;
+    document.addEventListener('fullscreenchange', _onDriveFullscreen);
+    document.addEventListener('webkitfullscreenchange', _onDriveFullscreen);
+  }
+}
+
+function _onDriveFullscreen() {
+  const fs = document.fullscreenElement || document.webkitFullscreenElement;
+  if (fs && fs.tagName === 'IFRAME') {
+    // Entering fullscreen — strip scaling so video fills the screen
+    fs.style.transform = '';
+    fs.style.width = '100%';
+    fs.style.height = '100%';
+    fs.style.transformOrigin = '';
+  }
+  if (!fs) {
+    // Exiting fullscreen — re-apply scaling to any Drive iframes
+    document.querySelectorAll('.video-container iframe, .cs-video-container iframe').forEach(f => {
+      const src = f.dataset.originalSrc || f.src || '';
+      if (src.includes('drive.google.com')) {
+        applyDriveScale(f, f.parentElement);
+      }
+    });
+  }
 }
 
 // ── Render Case Study Modal ─────────────────
