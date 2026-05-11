@@ -157,7 +157,7 @@ const PORTFOLIO_CONFIG = {
     {
       "id": "q1776580774250",
       "question": "How much do you charge for video editing?",
-      "answer": "It really depends on what you’re looking for. A simple cut-and-trim video will cost a lot less than something with detailed edits, motion graphics, or effects. Once I understand your idea and what you need, I’ll give you a clear and fair price—no confusion, no hidden costs."
+      "answer": "It really depends on what you’re looking for. A simple cut and trim video will cost a lot less than something with detailed edits, motion graphics, or effects. Once I understand your idea and what you need, I’ll give you a clear and fair price no confusion, no hidden costs."
     }
   ],
   "admin": {
